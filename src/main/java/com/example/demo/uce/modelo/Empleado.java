@@ -17,13 +17,19 @@ import jakarta.persistence.Table;
 @Table(name = "empleado")
 @Entity
 public class Empleado {
+	
+	
 @Id
 @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "empl_seq")
 @SequenceGenerator(name = "empl_seq",sequenceName = "empl_seq",allocationSize = 1)
 @Column(name = "empl_id")
-	private Integer id;
+private Integer id;
+
+
 @Column(name = "empl_salario")
 private BigDecimal salario;
+
+
 @Column(name = "empl_fecha_ingreso")
 private LocalDateTime fechaIngreso;
 
