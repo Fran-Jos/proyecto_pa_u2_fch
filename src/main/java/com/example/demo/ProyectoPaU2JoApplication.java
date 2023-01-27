@@ -1,47 +1,25 @@
 package com.example.demo;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-//import java.math.BigDecimal;
-//import java.time.LocalDateTime;
-//import java.util.ArrayList;
-//import java.util.Collection;
-//import java.util.Iterator;
-//import java.util.List;
-//import java.util.ListIterator;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.example.demo.uce.modelo.Auto;
-import com.example.demo.uce.modelo.Impronta;
-import com.example.demo.uce.service.IAutoService;
-
-//import com.example.demo.uce.modelo.Ciudadano;
-//import com.example.demo.uce.modelo.Empleado;
-//import com.example.demo.uce.modelo.Estudiante;
-//import com.example.demo.uce.modelo.Habitacion;
-//import com.example.demo.uce.modelo.Hotel;
-//import com.example.demo.uce.service.ICiudadanoService;
-//import com.example.demo.uce.service.IEmpleadoService;
-//import com.example.demo.uce.service.IEstudianteService;
-//import com.example.demo.uce.service.IHotelService;
+import com.example.demo.uce.modelo.Cliente;
+import com.example.demo.uce.modelo.Pedido;
+import com.example.demo.uce.repository.IClienteRepo;
 
 @SpringBootApplication
 public class ProyectoPaU2JoApplication implements CommandLineRunner {
 
-//	@Autowired
-//	private IEstudianteService estudianteService;
-//	@Autowired
-//	private ICiudadanoService ciudadanoService;
-//	@Autowired
-//	private IEmpleadoService empleadoService;
-//	@Autowired
-//	private IHotelService hotelService;
-//	
+
 	@Autowired
-	private IAutoService autoService;
+	private IClienteRepo clienteRepo;
 	
 	
 	public static void main(String[] args) {
@@ -53,62 +31,68 @@ public class ProyectoPaU2JoApplication implements CommandLineRunner {
 		// TODO Auto-generated method stub
 		
 	 
-	  Auto auto = new Auto();
-	  auto.setColor("rojo");
-	  auto.setMarca("Toyota");
-	  auto.setModelo("Hilux");
-	  auto.setPlaca("PUM-213");
+	  Cliente cliente = new Cliente();
+	  cliente.setApellido("Taco");
+	  cliente.setCedula("175440232");
+	  cliente.setEdad(21);
+	  cliente.setNombre("Gabriela");
 	  
-	  Auto auto1 = new Auto();
-	  auto1.setColor("azul");
-	  auto1.setMarca("Toyota");
-	  auto1.setModelo("Corolla");
-	  auto1.setPlaca("MMA-332");
+	  Cliente cliente1 = new Cliente();
+	  cliente1.setApellido("Chanataxi");
+	  cliente1.setCedula("1754400099");
+	  cliente1.setEdad(23);
+	  cliente1.setNombre("Francisco");
 	  
-	  Auto auto2 = new Auto();
-	  auto2.setColor("rojo");
-	  auto2.setMarca("Chevroleth");
-	  auto2.setModelo("xaaaa");
-	  auto2.setPlaca("MRT-873");
+	  Pedido pedido1 = new Pedido();
+	  pedido1.setCliente(cliente);
+	  pedido1.setCodigo("WAssa23G3");
+	  pedido1.setDescripcion("compra por EBAY (Bici)");
+	  pedido1.setFecha(LocalDateTime.now());
+	
+	  Pedido pedido2 = new Pedido();
+	  pedido2.setCliente(cliente);
+	  pedido2.setCodigo("ZZXW232");
+	  pedido2.setDescripcion("Celular reparacion");
+	  pedido2.setFecha(LocalDateTime.now());
 	  
-	  Impronta improntaVehicular = new Impronta();
-	  improntaVehicular.setNumMotor("122121");
-	  improntaVehicular.setSerie("aa112ss");
-	  improntaVehicular.setAuto(auto);
+	  Pedido pedido3 = new Pedido();
+	  pedido3.setCliente(cliente1);
+	  pedido3.setCodigo("TDFSSG3");
+	  pedido3.setDescripcion("caja sorpresa");
+	  pedido3.setFecha(LocalDateTime.now());
 	  
-	  Impronta improntaVehicular1 = new Impronta();
-	  improntaVehicular1.setNumMotor("87731");
-	  improntaVehicular1.setSerie("wea12xz");
-	  improntaVehicular1.setAuto(auto1);
+	  Pedido pedido4 = new Pedido();
+	  pedido4.setCliente(cliente1);
+	  pedido4.setCodigo("WAdadasd");
+	  pedido4.setDescripcion(" compra de peliculas ");
+	  pedido4.setFecha(LocalDateTime.now());
 	  
-	  Impronta improntaVehicular2 = new Impronta();
-	  improntaVehicular2.setNumMotor("77373");
-	  improntaVehicular2.setSerie("mmew32");
-	  improntaVehicular2.setAuto(auto2);
+	  List<Pedido>c1 = new ArrayList<>();
+	  c1.add(pedido1);
+	  c1.add(pedido2);
 	  
+	  List<Pedido>c2 = new ArrayList<>();
+	  c2.add(pedido4);
+	  c2.add(pedido3);
 	  
-	  auto.setImprontaVehicular(improntaVehicular);
-	  auto1.setImprontaVehicular(improntaVehicular1);
-	  auto2.setImprontaVehicular(improntaVehicular2);
+	  cliente.setPedido(c1);
+	  cliente1.setPedido(c2);
 	  
-	  this.autoService.agregar(auto);
-	  this.autoService.agregar(auto1);
-	  this.autoService.agregar(auto2);
+	  this.clienteRepo.insertar(cliente1);
+	  this.clienteRepo.insertar(cliente);
 	  
-	  Auto autoN = this.autoService.buscar(6);
+	  Cliente clienteN = this.clienteRepo.buscar(3);
 	  
-	  autoN.setColor("negro");
-	  autoN.setMarca("Ford");
+	  clienteN.setEdad(33);
+	  clienteN.setApellido("Mancheno");
 	  
-	  this.autoService.modificar(autoN);
+	  this.clienteRepo.actualizar(clienteN);
 	  
-	  this.autoService.eliminar(7);
-	  this.autoService.eliminar(8);
-	  this.autoService.eliminar(9);
-	  
-
-		
-
+	  this.clienteRepo.eliminar(7);
+	  this.clienteRepo.eliminar(5);
+	  this.clienteRepo.eliminar(8);
+	
+	
 	
 	}
 
